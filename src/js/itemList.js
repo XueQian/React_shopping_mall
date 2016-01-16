@@ -1,8 +1,21 @@
 var ItemList = React.createClass({
 
+    getInitialState: function() {
+
+        return {data: {items: []}};
+    },
+    componentDidMount: function() {
+
+        var that = this;
+
+        $.get(this.props.url, function(data) {
+            that.setState({data: data});
+        });
+    },
+
     render: function() {
 
-        var items = this.props.items;
+        var items = this.state.data.items;
 
         return <div id='itemList'>
             <ul>
@@ -22,6 +35,9 @@ var ItemList = React.createClass({
 });
 
 React.render(
-    <ItemList items={itemsData}/>,
+    <ItemList url='./src/data/items.json'/>,
     document.body
 );
+
+
+
